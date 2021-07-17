@@ -139,5 +139,42 @@ graph.append("svg:path").attr("d", line(json))
         .attr("y",10)
         .text("text");
 
+        
+
 </script>
+
+
 </body>
+
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+
+<svg width="460" height="400" id="example1"></svg>
+<script>
+
+    const annotations = [
+      {
+        note: {
+          label: "Here we can see LeBron had higher scoring seasons earlier in his career. Most likely due to playing with no other stars.",
+          title: "Annotation: Breakdown"
+        },
+        x: 0,
+        y: 100,
+        dy: 100,
+        dx: 100
+      }
+    ]
+    
+    const makeAnnotations = d3.annotation()
+      .annotations(annotations)
+    d3.select("#example1")
+      .append("g")
+      .call(makeAnnotations)
+    
+    
+    </script>
