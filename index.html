@@ -41,11 +41,11 @@
          .attr("transform", "translate(0," + height + ")")
          .call(d3.axisBottom(xScale))
          .append("text")
-         .attr("y", height - 250)
-         .attr("x", width - 100)
+         .attr("y", height - 150)
+         .attr("x", width + 250)
          .attr("text-anchor", "end")
          .attr("stroke", "black")
-         .text("Year");
+         .text("Position");
 
         g.append("g")
          .call(d3.axisLeft(yScale).tickFormat(function(d){
