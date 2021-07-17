@@ -1,11 +1,143 @@
-<html>
-    <head>
-        <title>Example</title>
-    </head>
-    <body>
-        <h1>PAGE 3</h1>
-        <button onclick="location.href='new_page.html'">
-            Previous Page
-          </button>
-    </body>
-</html>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<button onclick="location.href='new_page.html'">
+    Previous Page
+  </button>
+<h1>LeBron James Scoring Over Career</h1>
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+
+
+</style>
+<body>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 600 - margin.left - margin.right,
+    height = 270 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%d-%m-%Y").parse;
+
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
+
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
+
+var data = [
+  {time: "01-01-2003", value:20.9},
+  {time: "01-01-2004", value:27.2},
+  {time: "01-01-2005", value:31.4},
+  {time: "01-01-2006", value:27.3},
+  {time: "01-01-2007", value:30.0},
+  {time: "01-01-2008", value:28.4},
+  {time: "01-01-2009", value:29.7},
+  {time: "01-01-2010", value:26.7},
+  {time: "01-01-2011", value:27.1},
+  {time: "01-01-2012", value:26.8},
+  {time: "01-01-2013", value:27.1},
+  {time: "01-01-2014", value:25.3},
+  {time: "01-01-2015", value:25.3},
+  {time: "01-01-2016", value:26.4},
+  {time: "01-01-2017", value:27.5},
+  {time: "01-01-2018", value:27.4},
+  {time: "01-01-2019", value:25.3},
+  {time: "01-01-2020", value:25.0}
+
+];
+
+
+
+        data.forEach(function(d) {
+            d.date = parseDate(d.time);
+            d.close = +d.value;
+        });
+
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return d.value; })]);
+
+    svg.append("path")
+        .attr("class", "line")
+        .attr("d", valueline(data));
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+        var infos = svg.append('g')
+  .selectAll('rect')
+  .data(data)
+  .enter()
+  .append('g')
+
+  .attr('transform',function(d,i){d.x = x(d.date)  ; d.y = 0; return "translate(" + d.x + "," + d.y + ")";});
+
+infos.append("rect")
+.attr('class','line')
+.attr('height', height)
+.attr('width', 1)
+.attr('opacity',0);
+
+infos.append("rect")
+.attr('class','area')
+.attr('height', height)
+.attr('width', width/data.length/2)
+.attr('opacity',0)
+.attr('x',-width/data.length/4)
+.on('mouseover', function(){
+    g_elem = this.parentNode;
+    d3.select(g_elem).selectAll(".line").attr("opacity",1);
+})
+.on('mouseout', function(){
+    g_elem = this.parentNode;
+    d3.select(g_elem).selectAll(".line").attr("opacity",0);
+});
+
+graph.append("svg:path").attr("d", line(json))
+        .append("svg:g")
+        .append("text")
+        .attr("x", 10)
+        .attr("y",10)
+        .text("text");
+
+</script>
+</body>
